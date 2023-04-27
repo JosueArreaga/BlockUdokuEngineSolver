@@ -1,0 +1,195 @@
+//  This code is tested and allows for an interactive board;
+
+
+
+Square[][] board = new Square[3][3];
+
+        for(int i = 0; i < board.length; ++i) {
+            for(int j = 0; j < board[0].length; ++j) {
+                board[i][j] = new Square();
+                System.out.print(board[i][j]);
+            }
+            System.out.println();
+        }
+
+
+        System.out.println();
+
+
+//        board[0][2].Occupy();
+        board[0][1].Occupy();
+        board[0][0].Occupy();
+
+
+        for(int i = 0; i < board.length; ++i) {
+            for(int j = 0; j < board[0].length; ++j) {
+                System.out.print(board[i][j]);
+            }
+            System.out.println();
+        }
+
+
+        Piece8 p3 = new Piece8();
+        Node testing;
+        Node setting;
+        boolean exit = false;
+
+
+        int size = p3.getSize();
+        int emptyCount = 0;
+
+
+        try{
+            for(int i = 0; i < board.length; ++i) {
+                for(int j = 0; j < board[0].length; ++j) {
+                    testing = p3.getNode();
+                    setting = p3.getNode();
+                    emptyCount = 0;
+
+                    while (testing!= null){
+                        try{
+                            if(!board[i + testing.yValue][j + testing.xValue].isEmpty())
+                                emptyCount++;
+                            testing = testing.next;
+                        }
+                        catch (IndexOutOfBoundsException e){
+//                            System.out.println("Index out of bounds");                       Helps Debug
+                            testing = testing.next;
+                        }
+                    }
+
+
+                    if(size == emptyCount){
+//                        System.out.println("here");                                           Helps Debug
+                        while (setting != null){
+                            //System.out.println(setting.xValue + " " + setting.yValue);        Helps Debug
+                            board[i + setting.yValue][j + setting.xValue].Occupy();
+                            setting = setting.next;
+                        }
+                        throw new Exception();
+                    }
+
+                }
+                System.out.println();
+            }
+        } catch (Exception e){
+//            System.out.println("Exit Confirmed");
+        }
+
+
+        for(int i = 0; i < board.length; ++i) {
+            for(int j = 0; j < board[0].length; ++j) {
+                System.out.print(board[i][j]);
+            }
+            System.out.println();
+        }
+
+
+
+/*
+     This Code randomly generates a piece and places it on the board if it fits
+
+
+
+     Square[][] board = new Square[3][3];
+            Random rand = new Random();
+
+            for(int i = 0; i < board.length; ++i) {
+                for(int j = 0; j < board[0].length; ++j) {
+                    board[i][j] = new Square();
+                    System.out.print(board[i][j]);
+                }
+                System.out.println();
+            }
+
+
+            System.out.println();
+
+
+    //        board[0][2].Occupy();
+            board[0][1].Occupy();
+    //        board[0][0].Occupy();
+
+
+            for(int i = 0; i < board.length; ++i) {
+                for(int j = 0; j < board[0].length; ++j) {
+                    System.out.print(board[i][j]);
+                }
+                System.out.println();
+            }
+
+
+            Piece piece;
+
+            int result = rand.nextInt(1,8);
+
+            if(result == 1)
+                piece = new Piece1();
+            else if(result == 2)
+                piece = new Piece2();
+            else if(result == 3)
+                piece = new Piece3();
+            else if(result == 4)
+                piece = new Piece4();
+            else if(result == 5)
+                piece = new Piece5();
+            else if(result == 6)
+                piece = new Piece6();
+            else
+                piece = new Piece7();
+
+
+            Node testing;
+            Node setting;
+            boolean exit = false;
+
+
+            int size = piece.getSize();
+            int emptyCount = 0;
+
+
+            try{
+                for(int i = 0; i < board.length; ++i) {
+                    for(int j = 0; j < board[0].length; ++j) {
+                        testing = piece.getNode();
+                        setting = piece.getNode();
+                        emptyCount = 0;
+
+                        while (testing!= null){
+                            try{
+                                if(!board[i + testing.yValue][j + testing.xValue].isEmpty())
+                                    emptyCount++;
+                                testing = testing.next;
+                            }
+                            catch (IndexOutOfBoundsException e){
+    //                            System.out.println("Index out of bounds");                       Helps Debug
+                                testing = testing.next;
+                            }
+                        }
+
+
+                        if(size == emptyCount){
+    //                        System.out.println("here");                                           Helps Debug
+                            while (setting != null){
+                                //System.out.println(setting.xValue + " " + setting.yValue);        Helps Debug
+                                board[i + setting.yValue][j + setting.xValue].Occupy();
+                                setting = setting.next;
+                            }
+                            throw new Exception();
+                        }
+
+                    }
+                    System.out.println();
+                }
+            } catch (Exception e){
+    //            System.out.println("Exit Confirmed");
+            }
+
+
+            for(int i = 0; i < board.length; ++i) {
+                for(int j = 0; j < board[0].length; ++j) {
+                    System.out.print(board[i][j]);
+                }
+                System.out.println();
+            }
+*/
