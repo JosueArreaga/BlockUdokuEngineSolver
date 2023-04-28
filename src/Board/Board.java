@@ -1,10 +1,10 @@
 package Board;
 
-import Pieces.Node;
-import Pieces.Piece;
+import Pieces.*;
 import Square.Square;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 
 
@@ -228,7 +228,7 @@ public class Board implements Cloneable{
     }
 
     public int EvaluatePosition(){
-        return BlocksExploded();
+        return BlocksExploded() * 10000 + PiecesThatFit();
     }
 
     public int BlocksExploded(){
@@ -243,7 +243,59 @@ public class Board implements Cloneable{
     }
 
     public int PiecesThatFit(){
-        return 0;
+        int piecesCount = 0;
+
+        boolean aPieceExists = false; // this flag helps us know that at least one piece exists.
+
+        Piece [] piecesArray = {new Piece1(), new Piece2(), new Piece3(), new Piece4(), new Piece5(), new Piece6(), new Piece7(), new Piece8(), new Piece9(), new Piece10(),
+        new Piece11(), new Piece12(), new Piece13(), new Piece14(), new Piece15(), new Piece16(), new Piece17(), new Piece18(), new Piece19(), new Piece20(), new Piece21(),
+        new Piece22(), new Piece23(), new Piece24(), new Piece25(), new Piece26(), new Piece27(), new Piece28(), new Piece29(), new Piece30(), new Piece31(), new Piece32(),
+        new Piece33(), new Piece34(), new Piece35(), new Piece36(), new Piece37(), new Piece38(), new Piece39(), new Piece40(), new Piece41(), new Piece42(), new Piece43()};
+
+        for(Piece p : piecesArray){
+
+            Node testing;
+            isMovePlayable = false;
+            int size = p.getSize();
+            int emptyCount = 0;
+            int eachPieceCount = 0;
+
+            try{
+                for(int i = 0; i < board.length; ++i) {
+                    for(int j = 0; j < board[0].length; ++j) {
+                        testing = p.getNode();
+                        emptyCount = 0;
+
+                        while (testing!= null){
+                            try{
+                                if(!board[i + testing.yValue][j + testing.xValue].isEmpty())
+                                    emptyCount++;
+                                testing = testing.next;
+                            }
+                            catch (IndexOutOfBoundsException e){
+                                //                            System.out.println("Index out of bounds");                       Helps Debug
+                                testing = testing.next;
+                            }
+                        }
+
+                        if(size == emptyCount){
+                            eachPieceCount++;
+                            aPieceExists = true;
+                        }
+                    }
+                    //System.out.println();
+                }
+            } catch (Exception e){ // indexOutOfBounds e
+                System.out.println("something weird in pieces that fit class.");
+            }
+
+            /* System.out.println(p); System.out.println(eachPieceCount); System.out.println(); */
+
+            if(aPieceExists)
+                piecesCount += (eachPieceCount + 1000);
+        }
+
+        return piecesCount;
     }
 
     public int currentBlocks (){
