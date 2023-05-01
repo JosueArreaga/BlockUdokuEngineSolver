@@ -8,22 +8,25 @@ public class Logic {
         this.board = board;
     }
 
-    public void newTurn(Piece piece){
+    public void newTurn(Piece piece1, Piece piece2, Piece piece3){
         printBoard();
-        System.out.println(piece.toString() + "\n");
-        setMove(piece);
+        System.out.println(piece1.toString() + "\n");
+        System.out.println(piece2.toString() + "\n");
+        System.out.println(piece3.toString() + "\n");
+
+        PlayMove(piece1, piece2, piece3);
 
         if(!isGameOver()){
             printBoard();
         }else{
+            System.out.println("GAME OVER Pieces DO Not Fit");
             return;
         }
         board.clear();
-        //printBoard();
     }
 
-    public void setMove(Piece piece){
-        board.setMove(piece);
+    public void PlayMove(Piece piece1, Piece piece2, Piece piece3){
+        board.setMove(piece1, piece2, piece3);
     }
 
     public boolean isGameOver(){

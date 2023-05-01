@@ -4,7 +4,6 @@ import Pieces.*;
 import Square.Square;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedList;
 
 
@@ -12,7 +11,7 @@ public class Board implements Cloneable{
     final int boardLength = 9, boardWidth = 9;
     Square[][] board;
 
-    boolean isMovePlayable;
+    boolean isMoveNotPlayable;
 
     public Board(){
         Square[][] board = new Square[boardLength][boardWidth];
@@ -26,13 +25,328 @@ public class Board implements Cloneable{
     }
 
 
-    public void setMove(Piece piece) {
+    public void setMove(Piece piece, Piece piece2, Piece piece3) {
+        ArrayList<Board> bestBoards = new ArrayList<Board>();
+        boolean isOneLegal = false, isTwoLegal = false, isThreeLegal = false;
 
-        ArrayList<Board> gameInstances = new ArrayList<>();
+        bestBoards = obtainingBestBoards(piece, piece2, piece3, bestBoards); // I have the list of all best boards guaranteed for each piece.
+        isGameOver(bestBoards);
+
+        isOneLegal = bestBoards.get(0) != null;
+        isTwoLegal = bestBoards.get(1) != null;
+        isThreeLegal = bestBoards.get(2) != null;
+
+        if(isOneLegal && isTwoLegal && isThreeLegal){
+            permutationsAllBoards(piece, piece2, piece3, bestBoards);
+        }
+        else {
+            System.out.println("______________________________________________________________________________________________________________________");
+            isMoveNotPlayable = true;
+        }
+
+
+//        testingPiece(piece,gameInstances);
+//        findingBestBoard(gameInstances);
+//        isGameOver(gameInstances);
+
+    }
+
+    private void permutationsAllBoards(Piece piece, Piece piece2, Piece piece3, ArrayList<Board> bestBoards) {
+        ArrayList<Board> newBoards = new ArrayList<Board>();
+        Board currentBoard = null;
+        int score1 = bestBoards.get(0).evaluatePosition(), score2 = bestBoards.get(1).evaluatePosition(), score3 = bestBoards.get(2).evaluatePosition();
+        boolean newBoardOneExists = false, newBoardTwoExists = false, newBoardThreeExists = false;
+
+        if(score1 >= score2 && score1 >= score3) {
+            board = bestBoards.get(0).board;
+            System.out.println("inside piece 1");
+            printBoard();
+            currentBoard = clone();
+
+            newBoardTwoExists = cleaningBoards(bestBoards, piece2);
+            if(newBoardTwoExists)
+                newBoards.add(clone());
+            board = currentBoard.board;
+
+
+            newBoardThreeExists = cleaningBoards(bestBoards,piece3);
+            if(newBoardThreeExists)
+                newBoards.add(clone());
+
+            if(newBoards.size() == 2){
+                score2 = newBoards.get(0).evaluatePosition();
+                score3 = newBoards.get(1).evaluatePosition();
+            }
+            else if(newBoardTwoExists){
+                score2 = newBoards.get(0).evaluatePosition();
+                score3 = -1;
+            }
+            else if(newBoardThreeExists){
+                score3 = newBoards.get(0).evaluatePosition();
+                score2 = -1;
+            }
+            else {
+                System.out.println("1***********************************************GAME OVER ************************************************************************0");
+                isMoveNotPlayable = true;
+                return;
+            }
+            if(score2 >= score3){
+                board = newBoards.get(0).board;
+                System.out.println("piece 2 of 1");
+                printBoard();
+
+                newBoardThreeExists = cleaningBoards(bestBoards, piece3);
+                if(!newBoardThreeExists){
+                    System.out.println("1***********************************************GAME OVER ************************************************************************3");
+                    isMoveNotPlayable = true;
+                    return;
+                }
+
+                System.out.println("piece 3 of 1");
+
+            }else{
+                if(newBoardTwoExists && newBoardThreeExists){
+                    board = newBoards.get(1).board;
+                }
+                else
+                    board = newBoards.get(0).board;
+                System.out.println("piece 3 of 1");
+                printBoard();
+
+                newBoardTwoExists = cleaningBoards(bestBoards, piece2);
+                if(!newBoardTwoExists){
+                    System.out.println("1***********************************************GAME OVER ************************************************************************2");
+                    isMoveNotPlayable = true;
+                    return;
+                }
+                System.out.println("piece 2 of 1");
+            }
+        }
+
+        else if(score2 >= score1 && score2 >= score3){
+            board = bestBoards.get(1).board;
+            System.out.println("inside piece 2");
+            printBoard();
+            currentBoard = clone();
+
+            newBoardOneExists = cleaningBoards(bestBoards, piece);
+            if(newBoardOneExists)
+                newBoards.add(clone());
+            board = currentBoard.board;
+
+            newBoardThreeExists = cleaningBoards(bestBoards,piece3);
+            if(newBoardThreeExists)
+                newBoards.add(clone());
+
+            if(newBoards.size() == 2) {
+                score1 = newBoards.get(0).evaluatePosition();
+                score3 = newBoards.get(1).evaluatePosition();
+            }
+            else if(newBoardOneExists){
+                score1 = newBoards.get(0).evaluatePosition();
+                score3 = -1;
+            } else if (newBoardThreeExists) {
+                score3 = newBoards.get(0).evaluatePosition();
+                score1 = -1;
+            }
+            else {
+                System.out.println("2***********************************************GAME OVER ************************************************************************0");
+                isMoveNotPlayable = true;
+                return;
+            }
+
+
+            if(score1 >= score3){
+                board = newBoards.get(0).board;
+                System.out.println("piece 1 of 2");
+                printBoard();
+
+                newBoardThreeExists = cleaningBoards(bestBoards, piece3);
+                if (!newBoardThreeExists) {
+                    System.out.println("2***********************************************GAME OVER ************************************************************************3");
+                    isMoveNotPlayable = true;
+                    return;
+                }
+                System.out.println("piece 3 of 2");
+
+            }
+            else{
+                if(newBoardOneExists && newBoardThreeExists)
+                    board = newBoards.get(1).board;
+                else
+                    board = newBoards.get(0).board;
+                System.out.println("piece 3 of 2");
+                printBoard();
+
+                newBoardOneExists = cleaningBoards(bestBoards, piece);
+                if(!newBoardOneExists){
+                    System.out.println("2***********************************************GAME OVER ************************************************************************1");
+                    isMoveNotPlayable = true;
+                    return;
+                }
+
+                System.out.println("piece 1 of 2");
+            }
+        }
+
+        else {
+            board = bestBoards.get(2).board;
+            System.out.println("inside piece 3");
+            printBoard();
+            currentBoard = clone();
+
+            newBoardOneExists = cleaningBoards(bestBoards, piece);
+            if(newBoardOneExists)
+                newBoards.add(clone());
+            board = currentBoard.board;
+
+            newBoardTwoExists = cleaningBoards(bestBoards,piece2);
+            if(newBoardTwoExists)
+                newBoards.add(clone());
+
+            if(newBoards.size() == 2) {
+                score1 = newBoards.get(0).evaluatePosition();
+                score2 = newBoards.get(1).evaluatePosition();
+            }
+            else if(newBoardOneExists){
+                score1 = newBoards.get(0).evaluatePosition();
+                score2 = -1;
+            }
+            else if (newBoardTwoExists){
+                score2 = newBoards.get(0).evaluatePosition();
+                score1 = -1;
+            }
+            else {
+                System.out.println("3***********************************************GAME OVER ************************************************************************0");
+                isMoveNotPlayable = true;
+                return;
+            }
+
+            if(score1 >= score2){
+                board = newBoards.get(0).board;
+                System.out.println("piece 1 of 3");
+                printBoard();
+
+                newBoardTwoExists = cleaningBoards(bestBoards,piece2);
+                if(!newBoardTwoExists){
+                    System.out.println("3***********************************************GAME OVER ************************************************************************2");
+                    isMoveNotPlayable = true;
+                    return;
+                }
+                System.out.println("piece 2 of 3");
+
+
+            }else{
+                if(newBoardOneExists && newBoardTwoExists)
+                    board = newBoards.get(1).board;
+                else
+                    board = newBoards.get(0).board;
+                System.out.println("piece 2 of 3");
+                printBoard();
+
+
+                newBoardOneExists = cleaningBoards(bestBoards, piece);
+                if(!newBoardOneExists){
+                    System.out.println("3***********************************************GAME OVER ************************************************************************1");
+                    isMoveNotPlayable = true;
+                    return;
+                }
+                System.out.println("piece 1 of 3");
+            }
+        }
+
+    }
+
+    private boolean cleaningBoards(ArrayList<Board> bestBoards, Piece piece) {
+        bestBoards = new ArrayList<Board>();
+        testingPiece(piece, bestBoards);
+        return findingBoard(bestBoards);
+    }
+
+
+    private ArrayList<Board> obtainingBestBoards(Piece piece, Piece piece2, Piece piece3, ArrayList<Board> gameInstances) {
+
+        ArrayList<Board> bestBoards = new ArrayList<Board>(); // gets the best board of each possible piece variation
+        Board originalBoard = clone();  // Keeps track of original board
+
+        testingPiece(piece, gameInstances);
+        findingBestBoard(gameInstances);
+
+        if(gameInstances.isEmpty())
+            bestBoards.add(null);
+        else
+            bestBoards.add(clone());
+
+        board = originalBoard.board;
+
+        gameInstances = new ArrayList<>();
+        testingPiece(piece2, gameInstances);
+        findingBestBoard(gameInstances);
+
+        if(gameInstances.isEmpty())
+            bestBoards.add(null);
+        else
+            bestBoards.add(clone());
+
+        board = originalBoard.board;
+
+        gameInstances = new ArrayList<Board>();
+        testingPiece(piece3, gameInstances);
+        findingBestBoard(gameInstances);
+
+        if(gameInstances.isEmpty())
+            bestBoards.add(null);
+        else
+            bestBoards.add(clone());
+
+        return bestBoards;
+    }
+
+    private void isGameOver(ArrayList<Board> gameInstances) {
+        if (gameInstances.get(0) == null && gameInstances.get(1) == null && gameInstances.get(2) == null)
+            isMoveNotPlayable = true;
+
+        //System.out.println("Piece Does Not Fit! GAME OVER");
+    }
+
+    private void findingBestBoard(ArrayList<Board> gameInstances) {
+        if(gameInstances.size() > 0){
+            board = gameInstances.get(0).board;
+            int score = gameInstances.get(0).evaluatePosition();
+
+
+            for(Board b: gameInstances){
+                if(b.evaluatePosition() > score){
+                    board = b.board;
+                    score = b.evaluatePosition();
+                }
+            }
+        }
+    }
+
+
+    private boolean findingBoard(ArrayList<Board> gameInstances) {
+        if(gameInstances.size() > 0){
+            board = gameInstances.get(0).board;
+            int score = gameInstances.get(0).evaluatePosition();
+
+
+            for(Board b: gameInstances){
+                if(b.evaluatePosition() > score){
+                    board = b.board;
+                    score = b.evaluatePosition();
+                }
+            }
+
+        }
+        return gameInstances.size() > 0;
+    }
+
+    private void testingPiece(Piece piece, ArrayList<Board> gameInstances) {
 
         Node testing;
         Node setting;
-        isMovePlayable = false;
+        isMoveNotPlayable = false;
         //int k = 0;
 
         int size = piece.getSize();
@@ -67,42 +381,17 @@ public class Board implements Cloneable{
                             currentBoard.board[i + setting.yValue][j + setting.xValue].Occupy();
                             setting = setting.next;
                         }
-//                        throw new Exception();
-                        //k++;
-                        //System.out.println(k);
+
                         gameInstances.add(currentBoard);
                     }
 
                 }
-                //System.out.println();
+
             }
         } catch (Exception e){ // indexOutOfBounds e
             return; // e
         }
 
-//        System.out.println("Number of game instances");
-//        System.out.println(gameInstances.size());
-
-
-        if(gameInstances.size() > 0){
-            board = gameInstances.get(0).board;
-            int score = gameInstances.get(0).EvaluatePosition();
-
-
-            for(Board b: gameInstances){
-                if(b.EvaluatePosition() > score){
-                    board = b.board;
-                    score = b.EvaluatePosition();
-                }
-                //b.printBoard();
-            }
-
-            return;
-        }
-
-
-        isMovePlayable = true;
-        System.out.println("Piece Does Not Fit! GAME OVER");
     }
 
 
@@ -118,7 +407,7 @@ public class Board implements Cloneable{
 
     public Boolean gameOver() {
 
-        if(isMovePlayable)
+        if(isMoveNotPlayable)
             return true;
 
         for(int i = 0; i < board.length; ++i) {
@@ -227,7 +516,7 @@ public class Board implements Cloneable{
         }
     }
 
-    public int EvaluatePosition(){
+    public int evaluatePosition(){
         return BlocksExploded() * 10000 + PiecesThatFit();
     }
 
@@ -255,7 +544,7 @@ public class Board implements Cloneable{
         for(Piece p : piecesArray){
 
             Node testing;
-            isMovePlayable = false;
+            isMoveNotPlayable = false;
             int size = p.getSize();
             int emptyCount = 0;
             int eachPieceCount = 0;

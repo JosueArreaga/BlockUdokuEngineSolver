@@ -16,7 +16,7 @@ public class PieceGenerator {
 
 
 
-        int result = rnd.nextInt(1, 8); // 1 to 8 for simple game. 1 to 44 for real game
+        int result = rnd.nextInt(1, 44); // 1 to 8 for simple game. 1 to 44 for real game
 
         try {
             return piecesArray[result - 1];
