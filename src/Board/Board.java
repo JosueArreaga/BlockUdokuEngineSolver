@@ -8,7 +8,6 @@ import java.util.LinkedList;
 public class Board implements Cloneable {
     final int boardLength = 9, boardWidth = 9;
     Square[][] board;
-
     boolean isMoveNotPlayable;
 
     public Board() {
@@ -112,24 +111,24 @@ public class Board implements Cloneable {
             if(permutationsAllBoards(piece, piece2, piece3, score1, score2, score3, bestBoards))
                 finalResults.add(clone());
         } else {
-            System.out.println("______________________________________________________________________________________________________________________");
             isMoveNotPlayable = true;
         }
 
 
         if(finalResults.size() == 0){
             isMoveNotPlayable = true;
-            System.out.println("***********************************************GAME OVER ************************************************************************");
+            System.out.println("*********************************************** GAME OVER ************************************************************************");
+        } else {
+            findingBestBoard(finalResults);
+            System.out.println("Resulting Board");
         }
 
-        findingBestBoard(finalResults);
-        System.out.println("Chosen Board");
 
-
-//        testingPiece(piece,gameInstances);
-//        findingBestBoard(gameInstances);
-//        isGameOver(gameInstances);
-
+        /*
+        testingPiece(piece,bestBoards);
+        findingBestBoard(bestBoards);
+        isGameOver(bestBoards);
+         */
     }
 
     private boolean permutationsAllBoards(Piece piece, Piece piece2, Piece piece3, int score1, int score2, int score3, ArrayList<Board> bestBoards){
@@ -139,8 +138,8 @@ public class Board implements Cloneable {
 
         if (score1 >= score2 && score1 >= score3) {
             board = bestBoards.get(0).board;
-            System.out.println("inside piece 1");
-            printBoard();
+//            System.out.println("inside piece 1");
+//            printBoard();
             currentBoard = clone();
 
             newBoardTwoExists = cleaningBoards(bestBoards, piece2);
@@ -158,38 +157,36 @@ public class Board implements Cloneable {
 
             if (score2 >= score3) {
                 board = newBoards.get(0).board;
-                System.out.println("piece 2 of 1");
-                printBoard();
+//                System.out.println("piece 2 of 1");
+//                printBoard();
 
                 newBoardThreeExists = cleaningBoards(bestBoards, piece3);
                 if (!newBoardThreeExists) {
-//                    System.out.println("1***********************************************GAME OVER ************************************************************************3");
                     return false;
                 }
 
-                System.out.println("piece 3 of 1");
-                printBoard();
+//                System.out.println("piece 3 of 1");
+//                printBoard();
 
             } else {
                 if (newBoardTwoExists && newBoardThreeExists) {
                     board = newBoards.get(1).board;
                 } else
                     board = newBoards.get(0).board;
-                System.out.println("piece 3 of 1");
-                printBoard();
+//                System.out.println("piece 3 of 1");
+//                printBoard();
 
                 newBoardTwoExists = cleaningBoards(bestBoards, piece2);
                 if (!newBoardTwoExists) {
-//                    System.out.println("1***********************************************GAME OVER ************************************************************************2");
                     return false;
                 }
-                System.out.println("piece 2 of 1");
-                printBoard();
+//                System.out.println("piece 2 of 1");
+//                printBoard();
             }
         } else if (score2 >= score1 && score2 >= score3) {
             board = bestBoards.get(1).board;
-            System.out.println("inside piece 2");
-            printBoard();
+//            System.out.println("inside piece 2");
+//            printBoard();
             currentBoard = clone();
 
             newBoardOneExists = cleaningBoards(bestBoards, piece);
@@ -206,38 +203,36 @@ public class Board implements Cloneable {
 
             if (score1 >= score3) {
                 board = newBoards.get(0).board;
-                System.out.println("piece 1 of 2");
-                printBoard();
+//                System.out.println("piece 1 of 2");
+//                printBoard();
 
                 newBoardThreeExists = cleaningBoards(bestBoards, piece3);
                 if (!newBoardThreeExists) {
-//                    System.out.println("2***********************************************GAME OVER ************************************************************************3");
                     return false;
                 }
-                System.out.println("piece 3 of 2");
-                printBoard();
+//                System.out.println("piece 3 of 2");
+//                printBoard();
 
             } else {
                 if (newBoardOneExists && newBoardThreeExists)
                     board = newBoards.get(1).board;
                 else
                     board = newBoards.get(0).board;
-                System.out.println("piece 3 of 2");
-                printBoard();
+//                System.out.println("piece 3 of 2");
+//                printBoard();
 
                 newBoardOneExists = cleaningBoards(bestBoards, piece);
                 if (!newBoardOneExists) {
-//                    System.out.println("2***********************************************GAME OVER ************************************************************************1");
                     return false;
                 }
 
-                System.out.println("piece 1 of 2");
-                printBoard();
+//                System.out.println("piece 1 of 2");
+//                printBoard();
             }
         } else{
             board = bestBoards.get(2).board;
-            System.out.println("inside piece 3");
-            printBoard();
+//            System.out.println("inside piece 3");
+//            printBoard();
             currentBoard = clone();
 
             newBoardOneExists = cleaningBoards(bestBoards, piece);
@@ -254,32 +249,30 @@ public class Board implements Cloneable {
 
             if (score1 >= score2) {
                 board = newBoards.get(0).board;
-                System.out.println("piece 1 of 3");
-                printBoard();
+//                System.out.println("piece 1 of 3");
+//                printBoard();
 
                 newBoardTwoExists = cleaningBoards(bestBoards, piece2);
                 if (!newBoardTwoExists) {
-//                    System.out.println("3***********************************************GAME OVER ************************************************************************2");
                     return false;
                 }
-                System.out.println("piece 2 of 3");
-                printBoard();
+//                System.out.println("piece 2 of 3");
+//                printBoard();
 
             } else {
                 if (newBoardOneExists && newBoardTwoExists)
                     board = newBoards.get(1).board;
                 else
                     board = newBoards.get(0).board;
-                System.out.println("piece 2 of 3");
-                printBoard();
+//                System.out.println("piece 2 of 3");
+//                printBoard();
 
                 newBoardOneExists = cleaningBoards(bestBoards, piece);
                 if (!newBoardOneExists) {
-//                    System.out.println("3***********************************************GAME OVER ************************************************************************1");
                     return false;
                 }
-                System.out.println("piece 1 of 3");
-                printBoard();
+//                System.out.println("piece 1 of 3");
+//                printBoard();
             }
         }
 
@@ -299,7 +292,6 @@ public class Board implements Cloneable {
             secondScore = newBoards.get(0).evaluatePosition();
             firstScore = -1;
         } else {
-            //System.out.println("1***********************************************GAME OVER ************************************************************************0");
             return false;
         }
 
@@ -352,10 +344,13 @@ public class Board implements Cloneable {
     }
 
     private void isGameOver(ArrayList<Board> gameInstances) {
+//        if(gameInstances.size() == 0){
+//            isMoveNotPlayable = true;
+//            return;
+//        }
+
         if (gameInstances.get(0) == null && gameInstances.get(1) == null && gameInstances.get(2) == null)
             isMoveNotPlayable = true;
-
-        //System.out.println("Piece Does Not Fit! GAME OVER");
     }
 
     private void findingBestBoard(ArrayList<Board> gameInstances) {

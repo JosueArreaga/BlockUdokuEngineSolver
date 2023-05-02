@@ -19,7 +19,6 @@ public class Logic {
         if(!isGameOver()){
             printBoard();
         }else{
-            System.out.println("GAME OVER Pieces DO Not Fit");
             return;
         }
         board.clear();
