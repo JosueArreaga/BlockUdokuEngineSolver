@@ -1,4 +1,5 @@
-<h1>Project Purpose</h1> 
+<h1>BlockUdoku Engine Solver</h1>
+<h6>By Josue Arreaga</h6>
     
     This project aims to create an engine strong enough to outplay humans and test its limits in BlockUdoku. 
 
