@@ -9,12 +9,12 @@
    
 <h3>How does the engine work?</h3> 
    
-We start with an interactive board that detects whether a given piece fits. Next, we Iterate through the board, and in every location where the 
-piece fits, we create a clone of the board and store it in a board ArrayList. Then we compare each possible board to one another and evaluate which is 
-best. We do this for each of the three randomly generated pieces and save the best boards in a new ArrayList. Then we move on to our permutation method, which 
-analyses the six possibilities to play the board best. Notice we can play the pieces in the following orders: 123, 132, 213, 231, 312, 321. This method also 
-considers null exceptions (imagine piece 2 does not fit, but pieces 1 and 3 fit). Afterward, we play the board in which all three pieces fit with the highest
-score.The game is terminated if all three pieces do not fit on any board.  
+    We start with an interactive board that detects whether a given piece fits. Next, we Iterate through the board, and in every location where the 
+    piece fits, we create a clone of the board and store it in a board ArrayList. Then we compare each possible board to one another and evaluate which is 
+    best. We do this for each of the three randomly generated pieces and save the best boards in a new ArrayList. Then we move on to our permutation method, which 
+    analyses the six possibilities to play the board best. Notice we can play the pieces in the following orders: 123, 132, 213, 231, 312, 321. This method also 
+    considers null exceptions (imagine piece 2 does not fit, but pieces 1 and 3 fit). Afterward, we play the board in which all three pieces fit with the highest
+    score.The game is terminated if all three pieces do not fit on any board.  
     
 
 <h3>How are the board's positions analyzed?</h3>  
