@@ -1,4 +1,4 @@
-Project Purpose: 
+<h1>Project Purpose</h1> 
     
     This project aims to create an engine strong enough to outplay humans and test its limits in BlockUdoku. 
 
