@@ -1,11 +1,11 @@
 <h1>BlockUdoku Engine Solver</h1>
 <h5>By Josue Arreaga</h5>
     
-    This project aims to create an engine strong enough to outplay humans and test its limits in BlockUdoku. 
+This project aims to create an engine strong enough to outplay humans and test its limits in BlockUdoku. 
 
 <h3>What is BlockUdoku?</h3>
 
-    https://www.youtube.com/watch?v=B4ovtYYFUmM&ab_channel=Easybrain
+https://www.youtube.com/watch?v=B4ovtYYFUmM&ab_channel=Easybrain
    
 <h3>How does the engine work?</h3> 
    
