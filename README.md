@@ -58,7 +58,12 @@ This project was my biggest challenge up to today, and it highlights the best of
 lead to steadfastness. The two biggest challenges were these: cloning a board in Java composed of a 2D array of Squares and utilizing permutations efficiently 
 to find the best board. <b>Special thanks to Samuel Christie</b> for helping me with the Clonable interface, something above my pay grade. While this program 
 is not the most potent blockUdoku engine available, I am satisfied with my work. I created nodes representing each piece, utilized abstract classes, 
-polymorphism, interfaces, try-and-catch blocks, and a lot more. Possible future implementations include. The addition of a new parameter for our board 
-evaluation, white space clustering. Too many white spaces on the board at random locations affect the pieces we can place. In other words, we want our pieces 
+polymorphism, interfaces, try-and-catch blocks, and a lot more. 
+<hr> </hr>
+Possible future implementations include:
+
+* The addition of a new parameter for our board evaluation, white space clustering. 
+
+Too many white spaces on the board at random locations affect the pieces we can place. In other words, we want our pieces 
 to be as close to each other as possible with no white spaces or gaps in between.
     
