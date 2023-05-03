@@ -39,7 +39,7 @@ How Does the program compare to humans?
     20% of the time, an insanely good game. It currently has a max score of 255 rounds is a high score worthy of showing off to any friends. 
     
     
-Data from 1000 games sample(round reached): 
+Data from 1000 sample games(round reached): 
 
 ![1](https://user-images.githubusercontent.com/114194732/236049276-7fa2a3c2-555e-4d32-ad57-70782a76b51f.png)
 ![2](https://user-images.githubusercontent.com/114194732/236049279-582cc29e-9ef6-4a24-bdad-46473c4f9294.png)
