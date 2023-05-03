@@ -60,7 +60,7 @@ to find the best board. <b>Special thanks to Samuel Christie</b> for helping me 
 is not the most potent blockUdoku engine available, I am satisfied with my work. I created nodes representing each piece, utilized abstract classes, 
 polymorphism, interfaces, try-and-catch blocks, and a lot more. 
 <hr> </hr>
-Possible future implementations include:
+<h5>Possible future implementations include:</h5>
 
 * The addition of a new parameter for our board evaluation, white space clustering. 
 
