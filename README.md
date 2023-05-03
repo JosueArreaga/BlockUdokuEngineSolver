@@ -1,6 +1,6 @@
 Project Purpose: 
     
-    This project aims to create an engine strong enough to outplay humans and test its limits in BlockUdoku consistently. 
+    This project aims to create an engine strong enough to outplay humans and test its limits in BlockUdoku. 
 
 BlockUdoku Video Tutorial
 
