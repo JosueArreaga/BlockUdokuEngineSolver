@@ -21,7 +21,7 @@ highest score.The game is terminated if all three pieces do not fit on any board
 
 Our current implementation only utilizes two fields to analyze the best board:
 * The first field analyses which move leads to a board with the least amount of squares (a move may lead to pieces poping and freeing space in the board)
-* The second field analyses which board most pieces fit (a board where more pieces fit will be more likely to accommodate all our three pieces)
+* The second field analyses in which board do most pieces fit (a board where more pieces fit will be more likely to accommodate all our three pieces)
     
 <h3>How are the parameters tested?</h3> 
 
